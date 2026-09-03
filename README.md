@@ -32,6 +32,7 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_password
+```
 
 # 🛠️ Step-by-Step Commands & Workflow
 
@@ -40,18 +41,21 @@ Open your terminal in the project root directory and run the following command t
 
 ```bash
 sudo docker compose up -d --build
+```
 
 ### Step 2: Check Docker Status (Running or Not?)
 To check whether your containers are currently running and healthy, execute:
 
 ```bash
 sudo docker compose ps
+```
 
 ### Step 3. Restart Docker Containers
 If you need to restart all your services at any time, run:
 
 ```bash
 sudo docker compose restart
+```
 
 (আর যদি সম্পূর্ণ বন্ধ করে আবার চালু করতে চান, তবে `sudo docker compose down` দিয়ে আবার `sudo docker compose up -d` দিতে পারেন).
 
@@ -60,6 +64,7 @@ To enter inside the running application container (`laravel_app`) and run Larave
 
 ```bash
 sudo docker exec -it laravel_app bash
+```
 
 (কনটেইনারের ভেতরে যাওয়ার পর আপনার টার্মিনাল পাথ `/var/www` হয়ে যাবে। সেখান থেকে নিচের কমান্ডগুলো রান করতে পারবেন).
 
@@ -72,6 +77,7 @@ Once you are inside the container (`laravel_app`), run your necessary Laravel co
 composer install
 php artisan key:generate
 php artisan migrate
+```
 
 ## 🌐 Accessing Your Services
 
@@ -92,6 +98,7 @@ environment:
   MYSQL_DATABASE: your_custom_db
   MYSQL_USER: your_custom_user
   MYSQL_PASSWORD: your_custom_password
+  ```
 
  Step 2. Update the exact same credentials in your Laravel `.env` file (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
 
@@ -100,6 +107,7 @@ environment:
  ```bash
 sudo docker compose down
 sudo docker compose up -d --build
+```
 
 ## 🔄 Upgrading PHP Version & Latest Laravel Support
 If a newer Laravel version (e.g., Laravel 13) requires a newer PHP version (like PHP 8.3 or 8.4):
@@ -110,11 +118,13 @@ Step 2. Change the first line to your desired PHP version:
 
 ```dockfile
 FROM php:8.3-fpm
+```
 
 Step 3. Rebuild and restart your containers:
 
 ```bash
 sudo docker compose up -d --build
+```
 
 ## 💡 Pro-Tips & Troubleshooting
 
@@ -123,6 +133,7 @@ If you ever face permission denied issues with Laravel storage or cache folders,
 
 ```bash
 sudo chmod -R 777 storage bootstrap/cache
+```
 
 ### 2. Port Conflicts Issue
 If port `8080` or `3306` is already occupied by another local service on your PC, you can change the left-side port mapping in your `docker-compose.yml` file (e.g., change `"8080:80"` to `"9000:80"`).
