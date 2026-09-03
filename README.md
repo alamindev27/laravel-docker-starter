@@ -66,9 +66,13 @@ To enter inside the running application container (`laravel_app`) and run Larave
 sudo docker exec -it laravel_app bash
 ```
 
-(কনটেইনারের ভেতরে যাওয়ার পর আপনার টার্মিনাল পাথ `/var/www` হয়ে যাবে। সেখান থেকে নিচের কমান্ডগুলো রান করতে পারবেন).
+(Once you enter the container, your terminal path will be `/var/www`. From there, you can run the commands below.)
 
-কনটেইনার থেকে বের হওয়ার জন্য শুধু টাইপ করুন: `exit`.
+To exit the container, simply type:
+
+```bash
+exit
+```
 
 ### Step 5. Running Laravel Commands Inside Container
 Once you are inside the container (`laravel_app`), run your necessary Laravel commands:
@@ -81,8 +85,8 @@ php artisan migrate
 
 ## 🌐 Accessing Your Services
 
-- `Laravel Web Application: http://localhost:8080`
-- `phpMyAdmin (Database GUI): http://localhost:8081`
+- Laravel Web Application: [`http://localhost:8080`](http://localhost:8080)
+- phpMyAdmin (Database GUI): [`http://localhost:8081`](http://localhost:8081)
 
 (Login using the database credentials defined in your `docker-compose.yml` or `.env`)
 
@@ -93,7 +97,7 @@ If you want to change your database credentials:
 
 Step 1. Open docker-compose.yml and modify the environment variables under the db service:
 
-```yaml
+```yml
 environment:
   MYSQL_DATABASE: your_custom_db
   MYSQL_USER: your_custom_user
@@ -116,7 +120,7 @@ Step 1. Open your `Dockerfile`.
 
 Step 2. Change the first line to your desired PHP version:
 
-```dockfile
+```dockefile
 FROM php:8.3-fpm
 ```
 
