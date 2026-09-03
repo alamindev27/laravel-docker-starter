@@ -32,3 +32,97 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_password
+
+# 🛠️ Step-by-Step Commands & Workflow
+
+### Step 1: Build and Run Docker Containers
+Open your terminal in the project root directory and run the following command to build and start all services in the background:
+
+```bash
+sudo docker compose up -d --build
+
+### Step 2: Check Docker Status (Running or Not?)
+To check whether your containers are currently running and healthy, execute:
+
+```bash
+sudo docker compose ps
+
+### Step 3. Restart Docker Containers
+If you need to restart all your services at any time, run:
+
+```bash
+sudo docker compose restart
+
+(আর যদি সম্পূর্ণ বন্ধ করে আবার চালু করতে চান, তবে `sudo docker compose down` দিয়ে আবার `sudo docker compose up -d` দিতে পারেন).
+
+### Step 4. Accessing the Application Container (To Run Laravel Commands)
+To enter inside the running application container (`laravel_app`) and run Laravel artisan or composer commands, execute:
+
+```bash
+sudo docker exec -it laravel_app bash
+
+(কনটেইনারের ভেতরে যাওয়ার পর আপনার টার্মিনাল পাথ `/var/www` হয়ে যাবে। সেখান থেকে নিচের কমান্ডগুলো রান করতে পারবেন).
+
+কনটেইনার থেকে বের হওয়ার জন্য শুধু টাইপ করুন: `exit`.
+
+### Step 5. Running Laravel Commands Inside Container
+Once you are inside the container (`laravel_app`), run your necessary Laravel commands:
+
+```php
+composer install
+php artisan key:generate
+php artisan migrate
+
+## 🌐 Accessing Your Services
+
+- `Laravel Web Application: http://localhost:8080`
+- `phpMyAdmin (Database GUI): http://localhost:8081`
+
+(Login using the database credentials defined in your `docker-compose.yml` or `.env`)
+
+## ⚙️ Customization & Configuration
+
+### How to Change Database Name, Username, or Password?
+If you want to change your database credentials:
+
+Step 1. Open docker-compose.yml and modify the environment variables under the db service:
+
+```yaml
+environment:
+  MYSQL_DATABASE: your_custom_db
+  MYSQL_USER: your_custom_user
+  MYSQL_PASSWORD: your_custom_password
+
+ Step 2. Update the exact same credentials in your Laravel `.env` file (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
+
+ Step 3. Re-apply the changes by restarting Docker with a fresh build:
+
+ ```bash
+sudo docker compose down
+sudo docker compose up -d --build
+
+## 🔄 Upgrading PHP Version & Latest Laravel Support
+If a newer Laravel version (e.g., Laravel 13) requires a newer PHP version (like PHP 8.3 or 8.4):
+
+Step 1. Open your `Dockerfile`.
+
+Step 2. Change the first line to your desired PHP version:
+
+```dockfile
+FROM php:8.3-fpm
+
+Step 3. Rebuild and restart your containers:
+
+```bash
+sudo docker compose up -d --build
+
+## 💡 Pro-Tips & Troubleshooting
+
+### 1. Fix Storage & Cache Permission Errors
+If you ever face permission denied issues with Laravel storage or cache folders, run this command in your project root:
+
+```bash
+sudo chmod -R 777 storage bootstrap/cache
+
+### 2. Port Conflicts Issue
+If port `8080` or `3306` is already occupied by another local service on your PC, you can change the left-side port mapping in your `docker-compose.yml` file (e.g., change `"8080:80"` to `"9000:80"`).
