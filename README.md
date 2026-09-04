@@ -141,3 +141,10 @@ sudo chmod -R 777 storage bootstrap/cache
 
 ### 2. Port Conflicts Issue
 If port `8080` or `3306` is already occupied by another local service on your PC, you can change the left-side port mapping in your `docker-compose.yml` file (e.g., change `"8080:80"` to `"9000:80"`).
+
+
+
+### 3. Permission start.sh file
+```bash
+chmod +x start.sh start.sh
+```
